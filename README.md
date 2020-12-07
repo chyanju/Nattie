@@ -1,4 +1,4 @@
-- <div align="left">
+<div align="left">
     <h2>
       <img src="./docs/icon.png" width=50>
     	Natalie

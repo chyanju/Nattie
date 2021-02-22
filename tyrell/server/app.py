@@ -1,6 +1,7 @@
 import uuid
 import os
 import json
+import psutil
 
 from flask import Flask
 from flask import render_template
@@ -8,6 +9,8 @@ from flask import request
 from flask import jsonify
 from flask import make_response
 app = Flask(__name__)
+
+from . import app_neo as app_neo
 
 # unique mapping from ip to uuid
 ip2uuid = {}
@@ -49,5 +52,21 @@ def render_default():
 # 		jsonify({'status':'successful'}), 200
 # 	)
 
-if __name__ == '__main__':
-	app.run(host="0.0.0.0", port=4869)
+@app.route('/synthesize', methods=["POST"])
+def process_synthesize():
+	request_data = request.get_json()
+	# append ip
+	request_data["ip"] = request.remote_addr
+	# then return
+	return make_response(
+		jsonify({'status': 'successful', 'ip': request_data["ip"], 'code': request_data["code"]}), 200
+	)
+
+@app.route('/usage')
+def process_usage():
+	return make_response(
+		jsonify({
+			"cpu": psutil.cpu_percent(),
+			"memory": psutil.virtual_memory().percent,
+		})
+	)

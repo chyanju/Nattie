@@ -6,3 +6,4 @@ from . import interpreter
 from . import enumerator
 from . import decider
 from . import synthesizer
+from . import server

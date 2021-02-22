@@ -41,7 +41,7 @@
 		<div class="ui top fixed inverted menu">
 			<div class="ui container">
 				<div class="header item">
-					<img class="logo" src="{{ url_for('static', filename='icon.png') }">
+					<img class="logo" src="{{ url_for('static', filename='icon.png') }}">
 					Trinity | Data Wrangling
 				</div>
 				<div class="right menu">
@@ -107,7 +107,7 @@
 					<!-- padding bar, will not show -->
 					<div class="ui mini active inline loader" style="opacity: 0;"></div>
 				</div>
-				<a class="ui bottom right attached yellow label">
+				<a class="ui bottom right attached yellow label" id="BtnSynthesize">
 						Synthesize
 				</a>
 				<!-- end: status bar -->
@@ -156,6 +156,7 @@ output = out4</code></pre>
 			</div>
 			<!-- end: problem card -->
 
+			<div class="ui mini black message" id="DivUsage">CPU: ... | Memory: ... | Synthesis Tasks Running: ...</div>
 			<br/>
 			<br/>
 			<br/>
@@ -179,6 +180,45 @@ output = out4</code></pre>
 	// initialize dropdowns
 	$('.ui.dropdown').dropdown();
 
+	// register click event for the "Synthesize" button
+	$("#BtnSynthesize").click(function(){
+		alert("will post!");
+		$.ajax({
+			url: "/synthesize",
+			type: "POST",
+			contentType: "application/json",
+			data: JSON.stringify({"code":"Feb22"}),
+			dataType: "json"
+		})
+		.done(function(data){
+			alert("received:"+JSON.stringify(data));
+		})
+		.fail(function(){
+			alert("fail!");
+		})
+		.always(function(){
+			alert("complete");
+		});
+	});
+
+	$("#DivUsage").click(function(){
+		$.ajax({
+			url: "/usage",
+			type: "GET",
+			dataType: "json",
+			timeout: 5000,
+		})
+		.done(function(data){
+			$("#DivUsage").text("CPU: "+data["cpu"]+" | Memory: "+data["memory"]);
+		})
+		.fail(function(){
+			$("#DivUsage").text("CPU: ... | Memory: ...");
+		});
+	})
+
+	// ================================= //
+	// ==== table component related ==== //
+	// ================================= //
 	function auto_grow(element) {
 		element.style.height = "5px";
 		element.style.height = (element.scrollHeight)+"px";
@@ -189,6 +229,7 @@ output = out4</code></pre>
 		td.style.color = 'white';
 		td.style.background = '#2185d0';
 	}
+	// ================================= //
 
 	// =============================== //
 	// ==== process example input ==== //
@@ -202,7 +243,6 @@ output = out4</code></pre>
 		["2-1-2018","Chester",6.3,62.1],
 		["3-1-2018","Chester",9.9,73.2],
 	];
-
 	var ContainerExampleInput = document.getElementById('ExampleInput');
 	var HotExampleInput = new Handsontable(ContainerExampleInput, {
 	  data: DataExampleInput,
@@ -226,6 +266,7 @@ output = out4</code></pre>
 	    return cellProperties;
 	  }
 	});
+	// =============================== //
 
 	// ================================ //
 	// ==== process example output ==== //
@@ -236,7 +277,6 @@ output = out4</code></pre>
 		["2-1-2018",7.1,17.5,6.3,62.1],
 		["3-1-2018",6.3,81.4,9.9,73.2],
 	];
-
 	var ContainerExampleOutput = document.getElementById('ExampleOutput');
 	var HotExampleOutput = new Handsontable(ContainerExampleOutput, {
 	  data: DataExampleOutput,
@@ -260,5 +300,6 @@ output = out4</code></pre>
 	    return cellProperties;
 	  }
 	});
+	// =============================== //
 </script>
 </html>

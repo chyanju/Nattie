@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+import sys
+sys.path.append("..")
 
 import argparse
-import tyrell.spec as S
-from tyrell.interpreter import PostOrderInterpreter, GeneralError
-from tyrell.enumerator import BidirectEnumerator
-from tyrell.decider import Example, ExampleConstraintPruningDecider
-from tyrell.synthesizer import Synthesizer
-from tyrell.logger import get_logger
+from .. import spec as S
+from ..interpreter import PostOrderInterpreter, GeneralError
+from ..enumerator import BidirectEnumerator
+from ..decider import Example, ExampleConstraintPruningDecider
+from ..synthesizer import Synthesizer
+from ..logger import get_logger
 import rpy2.robjects as robjects
 
 logger = get_logger('tyrell')
@@ -319,19 +321,20 @@ def init_tbl(df_name, csv_loc):
     robjects.r(cmd)
     return None
 
-def main():
+def synthesize(arg_config=None):
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i0', '--input0', type=str)
-    parser.add_argument('-i1', '--input1', type=str)
-    parser.add_argument('-o', '--output', type=str)
-    parser.add_argument('-l', '--length', type=int)
-    args = parser.parse_args()
-    loc_val = args.length
+    if arg_config is None:
+        return {
+            "status_code": 1, 
+            "status_message": "No configuration file is found.",
+            "solution": "",
+        }
+
+    loc_val = arg_config["size"]
     # Input and Output must be in CSV format.
-    input0 = args.input0
-    input1 = args.input1
-    output = args.output
+    input0 = arg_config["input0"]
+    input1 = arg_config["input1"]
+    output = arg_config["output"]
     # This is required by Ruben.
     depth_val = loc_val + 1
     print(input0, input1, output, loc_val)
@@ -340,11 +343,11 @@ def main():
     init_tbl('output', output)
 
     logger.info('Parsing Spec...')
-    spec = S.parse_file('example/morpheus.tyrell')
+    spec = S.parse_file(arg_config["spec"])
     logger.info('Parsing succeeded')
 
     # Reading the n-gram model.
-    sketches = [line.strip() for line in open("./ngram.txt", 'r')]
+    sketches = [line.strip() for line in open(arg_config["ngram"], 'r')]
 
     logger.info('Building synthesizer...')
     synthesizer = Synthesizer(
@@ -368,7 +371,9 @@ def main():
     else:
         logger.info('Solution not found!')
 
+    return {
+        "status_code": 0,
+        "status_message": "A solution is found.",
+        "solution": "{}".format(prog),
+    }
 
-if __name__ == '__main__':
-    logger.setLevel('DEBUG')
-    main()

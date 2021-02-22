@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.7/semantic.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.7/semantic.min.js"></script>
+		<script src="{{ url_for('static', filename='benchmarks.js') }}"></script>
 		<style type="text/css">
 			.main {
 				margin-top: 80px;
@@ -67,7 +68,8 @@
 						<div class="menu">
 							<div class="item">New Problem</div>
 							<div class="item">Upload...</div>
-							<div class="item">Preset...</div>
+							<div class="item">MorpheusP2</div>
+							<div class="item">MorpheusP3</div>
 						</div>
 					</div>
 					<span>Morpheus P2</span> <i class="edit icon"></i>
@@ -98,9 +100,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="ui bottom right attached blue label">
-						Status: Solved <i class="check icon"></i>
-						&nbsp;&nbsp;
+				<div class="ui bottom right attached blue label" id="DivStatus">
+						Status: Ready
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						Synthesize<!-- this will not show -->
 				</div>
 				<div class="ui bottom right attached yellow label">
@@ -180,11 +182,17 @@ output = out4</code></pre>
 	// initialize dropdowns
 	$('.ui.dropdown').dropdown();
 
+	// this stores the preset of all status texts
+	var Text_DivStatus = {
+		"Synthesizing": 'Status: Synthesizing <div class="ui mini active inline loader"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synthesize',
+		"Solved": 'Status: Solved <i class="check icon"></i>&nbsp;&nbsp;Synthesize',
+		"Failed": 'Status: Failed <i class="exclamation icon"></i>&nbsp;&nbsp;Synthesize'
+	};
 	// register click event for the "Synthesize" button
 	$("#BtnSynthesize").click(function(){
-		alert("will post!");
+		$("#DivStatus").html(Text_DivStatus["Synthesizing"]);
 		$.ajax({
-			url: "/synthesize",
+			url: "/neo_app",
 			type: "POST",
 			contentType: "application/json",
 			data: JSON.stringify({"code":"Feb22"}),
@@ -192,15 +200,15 @@ output = out4</code></pre>
 		})
 		.done(function(data){
 			alert("received:"+JSON.stringify(data));
+			$("#DivStatus").html(Text_DivStatus["Solved"]);
 		})
 		.fail(function(){
 			alert("fail!");
-		})
-		.always(function(){
-			alert("complete");
+			$("#DivStatus").html(Text_DivStatus["Failed"]);
 		});
 	});
 
+	// this queries the server resource status
 	$("#DivUsage").click(function(){
 		$.ajax({
 			url: "/usage",

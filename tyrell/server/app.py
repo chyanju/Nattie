@@ -52,14 +52,26 @@ def render_default():
 # 		jsonify({'status':'successful'}), 200
 # 	)
 
-@app.route('/synthesize', methods=["POST"])
+# @app.route('/synthesize', methods=["POST"])
+# def process_synthesize():
+# 	request_data = request.get_json()
+# 	request_data["ip"] = request.remote_addr
+# 	return make_response(
+# 		jsonify({'status': 'successful', 'ip': request_data["ip"], 'code': request_data["code"]}), 200
+# 	)
+
+@app.route('/neo_app', methods=["POST"])
 def process_synthesize():
-	request_data = request.get_json()
-	# append ip
-	request_data["ip"] = request.remote_addr
-	# then return
+	resp = app_neo.synthesize({
+		"input0": "./benchmarks/pldi17/p2_input1.csv",
+		"input1": None,
+		"output": "./benchmarks/pldi17/p2_output1.csv",
+		"size": 3,
+		"ngram": "./ngram.txt",
+		"spec": "./example/morpheus.tyrell"
+	})
 	return make_response(
-		jsonify({'status': 'successful', 'ip': request_data["ip"], 'code': request_data["code"]}), 200
+		jsonify(resp), 200
 	)
 
 @app.route('/usage')

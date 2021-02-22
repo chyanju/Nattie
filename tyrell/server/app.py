@@ -62,14 +62,8 @@ def render_default():
 
 @app.route('/neo_app', methods=["POST"])
 def process_synthesize():
-	resp = app_neo.synthesize({
-		"input0": "./benchmarks/pldi17/p2_input1.csv",
-		"input1": None,
-		"output": "./benchmarks/pldi17/p2_output1.csv",
-		"size": 3,
-		"ngram": "./ngram.txt",
-		"spec": "./example/morpheus.tyrell"
-	})
+	request_config = request.get_json()
+	resp = app_neo.synthesize(request_config)
 	return make_response(
 		jsonify(resp), 200
 	)

@@ -26,7 +26,7 @@ var benchmarks = {
 	"MorpheusP3": {
 		"size": 3,
 		"enumerator": "ngram",
-		"spec": "morpheus.tyrell",
+		"spec": "morpheus",
 		"input0": [
 			["Person","Time","Score1","Score2"],
 			["greg","Pre",75,76],

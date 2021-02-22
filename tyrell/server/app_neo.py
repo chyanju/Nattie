@@ -333,11 +333,11 @@ def synthesize(arg_config=None):
     depth_val = loc_val + 1
 
     # prepare temp csv files
-    with open("./temp/input0.csv", "w") as csvfile:
+    with open("./tyrell/server/temp/input0.csv", "w") as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=",")
         for p in arg_config["input0"]:
             csv_writer.writerow(p)
-    with open("./temp/output.csv", "w") as csvfile:
+    with open("./tyrell/server/temp/output.csv", "w") as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=",")
         for p in arg_config["output"]:
             csv_writer.writerow(p)

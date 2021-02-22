@@ -3,8 +3,8 @@ var benchmarks = {
 
 	"MorpheusP2": {
 		"size": 3,
-		"ngram": "ngram.txt",
-		"spec": "morpheus.tyrell",
+		"enumerator": "ngram",
+		"spec": "morpheus",
 		"input0": [
 			["date","ship","latt","long"],
 			["1-1-2018","Baltimore",41.3,61.4],
@@ -14,7 +14,7 @@ var benchmarks = {
 			["2-1-2018","Chester",6.3,62.1],
 			["3-1-2018","Chester",9.9,73.2]
 		],
-		"input1": None,
+		"input1": null,
 		"output": [
 			["date","Baltimore_latt","Baltimore_long","Chester_latt","Chester_long"],
 			["1-1-2018",41.3,61.4,82.1,52.3],
@@ -25,7 +25,7 @@ var benchmarks = {
 
 	"MorpheusP3": {
 		"size": 3,
-		"ngram": "ngram.txt",
+		"enumerator": "ngram",
 		"spec": "morpheus.tyrell",
 		"input0": [
 			["Person","Time","Score1","Score2"],
@@ -34,7 +34,7 @@ var benchmarks = {
 			["sally","Pre",85,86],
 			["sally","Post",80,78]
 		],
-		"input1": None,
+		"input1": null,
 		"output": [
 			["Person","Post_Score1","Post_Score2","Pre_Score1","Pre_Score2"],
 			["greg",86,85,75,76],

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-import sys
-sys.path.append("..")
 
-import argparse
+import csv
 from .. import spec as S
 from ..interpreter import PostOrderInterpreter, GeneralError
 from ..enumerator import BidirectEnumerator
@@ -331,23 +329,39 @@ def synthesize(arg_config=None):
         }
 
     loc_val = arg_config["size"]
-    # Input and Output must be in CSV format.
-    input0 = arg_config["input0"]
-    input1 = arg_config["input1"]
-    output = arg_config["output"]
     # This is required by Ruben.
     depth_val = loc_val + 1
-    print(input0, input1, output, loc_val)
+
+    # prepare temp csv files
+    with open("./temp/input0.csv", "w") as csvfile:
+        csv_writer = csv.writer(csvfile, delimiter=",")
+        for p in arg_config["input0"]:
+            csv_writer.writerow(p)
+    with open("./temp/output.csv", "w") as csvfile:
+        csv_writer = csv.writer(csvfile, delimiter=",")
+        for p in arg_config["output"]:
+            csv_writer.writerow(p)
+    input0 = "./tyrell/server/temp/input0.csv"
+    input1 = None # (fixme) ignore this for now
+    output = "./tyrell/server/temp/output.csv"
+    
     init_tbl('input0', input0)
-    #FIXME: ignore the second input table for now.
     init_tbl('output', output)
 
     logger.info('Parsing Spec...')
-    spec = S.parse_file(arg_config["spec"])
+    spec = S.parse_file("./example/{}.tyrell".format(arg_config["spec"]))
     logger.info('Parsing succeeded')
 
-    # Reading the n-gram model.
-    sketches = [line.strip() for line in open(arg_config["ngram"], 'r')]
+    if arg_config["enumerator"] == "ngram":
+        # Reading the n-gram model.
+        with open("./ngram{}.txt".format(arg_config["size"]), "r") as f:
+            sketches = [p.strip() for p in f.readlines()]
+    else:
+        return {
+            "status_code": 2,
+            "status_message": "Unsupported enumerator mode: {}".format(arg_config["enumerator"]),
+            "solution": "",
+        }
 
     logger.info('Building synthesizer...')
     synthesizer = Synthesizer(

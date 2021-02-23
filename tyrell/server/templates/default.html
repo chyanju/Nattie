@@ -265,17 +265,18 @@ output = out4</code></pre>
 		// set benchmark name
 		$("#DivBenchmarkName").html(selected_benchmark);
 		// set natural language zone
-		$("#DivTitle").value(benchmarks[selected_benchmark]["title"]);
-		$("#DivQuestion").value(benchmarks[selected_benchmark]["question"]);
+		$("#DivTitle").val(benchmarks[selected_benchmark]["title"]);
+		$("#DivQuestion").val(benchmarks[selected_benchmark]["question"]);
+		auto_grow($("#DivQuestion")[0]);
 		// update global information
 		current_configuration["input0"] = benchmarks[selected_benchmark]["input0"];
 		current_configuration["input1"] = benchmarks[selected_benchmark]["input1"];
 		current_configuration["output"] = benchmarks[selected_benchmark]["output"];
-		current_configuration["title"] = benchmarks[selected_benchmark["title"]];
-		current_configuration["question"] = benchmarks[selected_benchmark["question"]];
-		current_configuration["size"] = benchmarks[selected_benchmark["size"]];
-		current_configuration["spec"] = benchmarks[selected_benchmark["spec"]];
-		current_configuration["enumerator"] = benchmarks[selected_benchmark["enumerator"]];
+		current_configuration["title"] = benchmarks[selected_benchmark]["title"];
+		current_configuration["question"] = benchmarks[selected_benchmark]["question"];
+		current_configuration["size"] = benchmarks[selected_benchmark]["size"];
+		current_configuration["spec"] = benchmarks[selected_benchmark]["spec"];
+		current_configuration["enumerator"] = benchmarks[selected_benchmark]["enumerator"];
 		// (fixme) need to sync other ui texts
 	});
 

@@ -19,11 +19,10 @@ var benchmarks = {
 			["nam","val_round1","val_round2","var1_round1","var1_round2","var2_round1","var2_round2"],
 			["bar",0.124105813913047,0.0325823465827852,22,11,33,44],
 			["foo",0.169122009770945,0.185708264587447,22,11,33,44]
-		]
+		],
 		"title": "long to wide with dplyr",
 		"question": 
-`
-I have a data frame which is structured like this one:
+`I have a data frame which is structured like this one:
 
 \`dd <- data.frame(round = c("round1", "round2", "round1", "round2"),
                  var1 = c(22, 11, 22, 11),
@@ -41,8 +40,7 @@ From this I would like to obtain a data frame with two lines, one for each value
 \`  nam var1_round1 var1_round2 var2_round1 var2_round2 val_round1 val_round2
 1 foo          22          11          33          44 0.32995729  0.8921504
 2 bar          22          11          33          44 0.09213526  0.8264472\`
-The closest thing I can think of would be to use \`spread()\` in some creative way but I can't seem to figure it out.
-`
+The closest thing I can think of would be to use \`spread()\` in some creative way but I can't seem to figure it out.`
 	},
 
 	// ========== Morpheus2 ========== //
@@ -87,8 +85,7 @@ But how can I spread two values e.g. both \`A\` and \`B\`, such that the output 
 \`  month Amy.A Bob.A Amy.B Bob.B
 1     1     9     8     6     5
 2     2     7     6     7     6
-3     3     6     9     8     7\`
-`
+3     3     6     9     8     7\``
 	},
 
 	// ========== Morpheus3 ========== //
@@ -109,10 +106,9 @@ But how can I spread two values e.g. both \`A\` and \`B\`, such that the output 
 			["greg",78,82,88,84],
 			["sally",78,79,76,72]
 		],
-		"title": "How can I spread repeated measures of multiple variables into wide format?"
+		"title": "How can I spread repeated measures of multiple variables into wide format?",
 		"question":
-`
-I'm trying to take columns that are in long format and spread them to wide format as shown below. I'd like to use tidyr to solve this with the data manipulation tools I'm investing in but to make this answer more general please provide other solutions.
+`I'm trying to take columns that are in long format and spread them to wide format as shown below. I'd like to use tidyr to solve this with the data manipulation tools I'm investing in but to make this answer more general please provide other solutions.
 
 Here's what I have:
 
@@ -148,8 +144,7 @@ And then using \`_join\` but that seems verbose and like there's got to be a bet
 
 Related questions:
 tidyr wide to long with two repeated measures
-Is it possible to use spread on multiple columns in tidyr similar to dcast?
-`
+Is it possible to use spread on multiple columns in tidyr similar to dcast?`
 	}
 
 }

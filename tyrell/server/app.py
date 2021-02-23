@@ -10,7 +10,7 @@ from flask import jsonify
 from flask import make_response
 app = Flask(__name__)
 
-from . import app_neo as app_neo
+from . import app_synthesize as app_synthesize
 
 # unique mapping from ip to uuid
 ip2uuid = {}
@@ -60,10 +60,10 @@ def render_default():
 # 		jsonify({'status': 'successful', 'ip': request_data["ip"], 'code': request_data["code"]}), 200
 # 	)
 
-@app.route('/neo_app', methods=["POST"])
+@app.route('/synthesize', methods=["POST"])
 def process_synthesize():
 	request_config = request.get_json()
-	resp = app_neo.synthesize(request_config)
+	resp = app_synthesize.synthesize(request_config)
 	return make_response(
 		jsonify(resp), 200
 	)

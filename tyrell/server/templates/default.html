@@ -68,8 +68,9 @@
 						<div class="menu">
 							<div class="item">New Problem</div>
 							<div class="item">Upload...</div>
-							<div class="item MenuLoadBenchmark">MorpheusP2</div>
-							<div class="item MenuLoadBenchmark">MorpheusP3</div>
+							<div class="item MenuLoadBenchmark">Morpheus1</div>
+							<div class="item MenuLoadBenchmark">Morpheus2</div>
+							<div class="item MenuLoadBenchmark">Morpheus3</div>
 						</div>
 					</div>
 					<span id="DivBenchmarkName">New Problem</span> <i class="edit icon"></i>
@@ -127,9 +128,13 @@
 				<!-- end: table zone -->
 				<div class="ui divider"></div>
 				<!-- start: natural language zone -->
+				<div class="ui left icon input" style="width: 100%">
+					<input id="DivTitle" type="text" placeholder="Title: a piece of short text of what you want." style="border: none;">
+					<i class="quote left icon"></i>
+				</div>
 				<div class="ui left icon input" style="width: 100%;">
-					<textarea placeholder="Attach a natural language description here for your question." oninput="auto_grow(this)" style="border: none; resize: none;"></textarea>
-					<i class="search icon"></i>
+					<textarea id="DivQuestion" placeholder="Question: a description of what you want." oninput="auto_grow(this)" style="border: none; resize: none;"></textarea>
+					<i class="comment outline icon"></i>
 				</div>
 				<!-- end: natural language zone -->
 				<div class="ui divider"></div>
@@ -190,7 +195,9 @@ output = out4</code></pre>
 		"output": [["","",""],["","",""],["","",""]],
 		"size": 3,
 		"enumerator": "ngram",
-		"spec": "morpheus"
+		"spec": "morpheus",
+		"title": "",
+		"question": ""
 	};
 
 	// ================================= //
@@ -255,12 +262,21 @@ output = out4</code></pre>
 		RenderDivTable($("#DivInput0")[0], benchmarks[selected_benchmark]["input0"], "obj_input0");
 		RenderDivTable($("#DivOutput")[0], benchmarks[selected_benchmark]["output"], "obj_output");
 		current_configuration["obj_input1"] = null; // (fixme)
+		// set benchmark name
+		$("#DivBenchmarkName").html(selected_benchmark);
+		// set natural language zone
+		$("#DivTitle").value(benchmarks[selected_benchmark]["title"]);
+		$("#DivQuestion").value(benchmarks[selected_benchmark]["question"]);
 		// update global information
 		current_configuration["input0"] = benchmarks[selected_benchmark]["input0"];
 		current_configuration["input1"] = benchmarks[selected_benchmark]["input1"];
 		current_configuration["output"] = benchmarks[selected_benchmark]["output"];
-		// set benchmark name
-		$("#DivBenchmarkName").html(selected_benchmark);
+		current_configuration["title"] = benchmarks[selected_benchmark["title"]];
+		current_configuration["question"] = benchmarks[selected_benchmark["question"]];
+		current_configuration["size"] = benchmarks[selected_benchmark["size"]];
+		current_configuration["spec"] = benchmarks[selected_benchmark["spec"]];
+		current_configuration["enumerator"] = benchmarks[selected_benchmark["enumerator"]];
+		// (fixme) need to sync other ui texts
 	});
 
 	// this stores the preset of all status texts

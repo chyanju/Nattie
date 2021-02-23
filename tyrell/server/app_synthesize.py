@@ -9,6 +9,8 @@ from ..synthesizer import Synthesizer
 from ..logger import get_logger
 import rpy2.robjects as robjects
 
+from . import mars as mars
+
 logger = get_logger('tyrell')
 
 counter_ = 1
@@ -327,6 +329,33 @@ def synthesize(arg_config=None):
             "status_message": "No configuration file is found.",
             "solution": "",
         }
+
+    # hijack here for testing
+    temp_p2_desc = ('R spreading multiple columns with tidyr [duplicate]',
+ [(0, 'This question already has an answer here:'),
+  (0, 'Take this sample variable'),
+  (1,
+   'df <- data.frame(month=rep(1:3,2),\n                 student=rep(c("Amy", "Bob"), each=3),\n                 A=c(9, 7, 6, 8, 6, 9),\n                 B=c(6, 7, 8, 5, 6, 7))\n'),
+  (0, 'I can use spread from tidyr to change this to wide format.'),
+  (1, 'spread'),
+  (1, 'tidyr'),
+  (1,
+   '> df[, -4] %>% spread(student, A)\n  month Amy Bob\n1     1   9   8\n2     2   7   6\n3     3   6   9\n'),
+  (0,
+   'But how can I spread two values e.g. both A and B, such that the output is something like'),
+  (1, 'A'),
+  (1, 'B'),
+  (1,
+   '  month Amy.A Bob.A Amy.B Bob.B\n1     1     9     8     6     5\n2     2     7     6     7     6\n3     3     6     9     8     7\n')])
+    new_ngram_list = mars.generate_one_ranking(
+        temp_p2_desc,
+        arg_config["size"],
+    )
+    return {
+        "status_code": 0,
+        "status_message": "Testing results are ready.",
+        "solution": "{}".format(new_ngram_list[:10]),
+    } 
 
     loc_val = arg_config["size"]
     # This is required by Ruben.

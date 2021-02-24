@@ -257,6 +257,9 @@
 
 	// register click event for the "Synthesize" button
 	$("#BtnSynthesize").click(function(){
+		// first update the info from the user interface
+		SyncCurrentConf();
+		// then issue the request
 		$.ajax({
 			url: current_configuration["app"],
 			type: "POST",

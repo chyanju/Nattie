@@ -142,6 +142,67 @@ And then using \`_join\` but that seems verbose and like there's got to be a bet
 Related questions:
 tidyr wide to long with two repeated measures
 Is it possible to use spread on multiple columns in tidyr similar to dcast?`
+	},
+
+	// ========== Morpheus20 ========== //
+	"Morpheus20": {
+		"size": 3,
+		"spec": "morpheus",
+		"input0": [
+			["group","times","action_rate","action_rate2"],
+			["a","before",0.1,0.2],
+			["a","after",0.15,0.25],
+			["b","before",0.2,0.3],
+			["b","after",0.18,0.28]
+		],
+		"input1": null,
+		"output": [
+			["group","action_rate_after","action_rate_before","action_rate2_after","action_rate2_before"],
+			["a",0.15,0.1,0.25,0.2],
+			["b",0.18,0.2,0.28,0.3]
+		],
+		"title": "From long to wide data with multiple columns?",
+		"question":
+`Suggestions for how to smoothly get from foo to foo2 (preferably with tidyr or reshape2 packages)?
+
+This is kind of like this question, but not exactly I think, because I don't want to auto-number columns, just widen multiple columns. It's also kind of like this question, but again, I don't think I want the columns to vary with a row value as in that answer. Or, a valid answer to this question is to convince me it's exactly like one of the others. The solution in the second question of "two dcasts plus a merge" is the most attractive right now, because it is comprehensible to me.
+
+foo:
+
+foo = data.frame(group=c('a', 'a', 'b', 'b', 'c', 'c'),
+                  times=c('before', 'after', 'before', 'after', 'before', 'after'),
+                  action_rate=c(0.1,0.15, 0.2, 0.18,0.3, 0.35),
+                  num_users=c(100, 100, 200, 200, 300, 300))
+foo <- transform(foo,
+                 action_rate_c95 = 1.95 * sqrt(action_rate*(1-action_rate)/num_users))
+
+> foo
+\`  group  times action_rate num_users action_rate_c95
+1     a before        0.10       100      0.05850000
+2     a  after        0.15       100      0.06962893
+3     b before        0.20       200      0.05515433
+4     b  after        0.18       200      0.05297400
+5     c before        0.30       300      0.05159215
+6     c  after        0.35       300      0.05369881\`
+foo2:
+
+\`foo2 <- data.frame(group=c('a', 'b', 'c'),
+                   action_rate_before=c(0.1,0.2, 0.3),
+                   action_rate_after=c(0.15, 0.18,0.35),
+                   action_rate_c95_before=c(0.0585,0.055, 0.05159),
+                   action_rate_c95_after=c(0.069, 0.0530,0.0537),
+                   num_users=c(100, 200, 300))\`
+
+> foo2
+  group action_rate_before action_rate_after action_rate_c95_before
+1     a                0.1              0.15                 0.0585
+2     b                0.2              0.18                 0.0550
+3     c                0.3              0.35                 0.05159
+  action_rate_c95_after num_users
+1                 0.0690       100
+2                 0.0530       200
+3                 0.0537       300
+EDIT: Now I'd probably try to do it with pivot_wider from tidyr.`
 	}
 
 }

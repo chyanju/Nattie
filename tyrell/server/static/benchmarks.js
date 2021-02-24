@@ -5,7 +5,6 @@ var benchmarks = {
 	// ========== Morpheus1 ========== //
 	"Morpheus1": {
 		"size": 3,
-		"enumerator": "ngram",
 		"spec": "morpheus",
 		"input0": [
 			["round","var1","var2","nam","val"],
@@ -46,7 +45,6 @@ The closest thing I can think of would be to use \`spread()\` in some creative w
 	// ========== Morpheus2 ========== //
 	"Morpheus2": {
 		"size": 3,
-		"enumerator": "ngram",
 		"spec": "morpheus",
 		"input0": [
 			["month","student","A","B"],
@@ -91,7 +89,6 @@ But how can I spread two values e.g. both \`A\` and \`B\`, such that the output 
 	// ========== Morpheus3 ========== //
 	"Morpheus3": {
 		"size": 3,
-		"enumerator": "ngram",
 		"spec": "morpheus",
 		"input0": [
 			["Person","Time","Score1","Score2"],

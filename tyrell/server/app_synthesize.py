@@ -367,21 +367,15 @@ def synthesize(arg_config=None):
     spec = S.parse_file("./example/{}.tyrell".format(arg_config["spec"]))
     logger.info('Parsing succeeded')
 
-    if arg_config["enumerator"] == "ngram":
-        # Reading the n-gram model.
-        with open("./ngram{}.txt".format(arg_config["size"]), "r") as f:
-            sketches = [p.strip() for p in f.readlines()]
-    elif arg_config["enumerator"] == "mars":
+    if arg_config["use_nl"]:
         sketches = mars.generate_one_ranking(
             one_desc,
             arg_config["size"],
         )
     else:
-        return {
-            "status_code": 2,
-            "status_message": "Unsupported enumerator mode: {}".format(arg_config["enumerator"]),
-            "solution": "",
-        }
+        # Reading the n-gram model.
+        with open("./ngram{}.txt".format(arg_config["size"]), "r") as f:
+            sketches = [p.strip() for p in f.readlines()]
 
     logger.info('Building synthesizer...')
     synthesizer = Synthesizer(

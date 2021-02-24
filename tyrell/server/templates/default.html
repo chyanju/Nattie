@@ -58,61 +58,38 @@
 			<!-- start: problem card -->
 			<div class="ui fitted center aligned blue segment ProblemCard">
 				<!-- start: status bar -->
+
 				<div class="ui bottom attached blue label">
-					<!-- padding bar, will not show -->
-					<div class="ui mini active inline loader" style="opacity: 0;"></div>
-				</div>
-				<div class="ui bottom left attached blue label">
-					<div class="ui tiny inline bottom left pointing dropdown">
-						<i class="tasks icon"></i>
-						<div class="menu">
-							<div class="item">New Problem</div>
-							<div class="item">Upload...</div>
-							<div class="item MenuLoadBenchmark">Morpheus1</div>
-							<div class="item MenuLoadBenchmark">Morpheus2</div>
-							<div class="item MenuLoadBenchmark">Morpheus3</div>
+					<div class="ui grid">
+						<div class="ui left aligned eight wide column">
+							<div class="ui tiny inline bottom left pointing dropdown">
+								<i class="tasks icon"></i>
+								<div class="menu">
+									<div class="item">New Problem</div>
+									<div class="item">Upload...</div>
+									<div class="item MenuLoadBenchmark">Morpheus1</div>
+									<div class="item MenuLoadBenchmark">Morpheus2</div>
+									<div class="item MenuLoadBenchmark">Morpheus3</div>
+								</div>
+							</div>
+							<span id="DivBenchmarkName">New Problem</span> <i class="edit icon"></i>
+							<span> | </span>
+							<div class="ui tiny inline bottom right pointing dropdown">
+								Size <div class="text" id="DivSize">3</div><i class="caret up icon"></i>
+								<div class="menu">
+									<div class="item">3</div>
+									<div class="item">4</div>
+									<div class="item">5</div>
+								</div>
+							</div>
 						</div>
-					</div>
-					<span id="DivBenchmarkName">New Problem</span> <i class="edit icon"></i>
-					|&nbsp;&nbsp;
-					<div class="ui tiny inline bottom right pointing dropdown">
-						<div class="text">Neo</div><i class="caret up icon"></i>
-						<div class="menu">
-							<div class="item">None</div>
-							<div class="item">Neo</div>
-							<div class="item">Mars</div>
-						</div>
-					</div>
-					|&nbsp;&nbsp;
-					<div class="ui tiny inline bottom right pointing dropdown">
-						<div class="text">Size 3</div><i class="caret up icon"></i>
-						<div class="menu">
-							<div class="item">Size 3</div>
-							<div class="item">Size 4</div>
-							<div class="item">Size 5</div>
-						</div>
-					</div>
-					|&nbsp;&nbsp;
-					<div class="ui tiny inline bottom right pointing dropdown">
-						<div class="text">1 Input</div><i class="caret up icon"></i>
-						<div class="menu">
-							<div class="item">1 Input</div>
-							<div class="item">2 Inputs</div>
+						<div class="ui right aligned eight wide column">
+							<span>CPU: ...</span><span> | </span>
+							<span>Memory: ...</span><span> | </span>
+							<span>Status: Ready</span>
 						</div>
 					</div>
 				</div>
-				<div class="ui bottom right attached blue label" id="DivStatus">
-						Status: Ready
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						Synthesize<!-- this will not show -->
-				</div>
-				<div class="ui bottom right attached yellow label">
-					<!-- padding bar, will not show -->
-					<div class="ui mini active inline loader" style="opacity: 0;"></div>
-				</div>
-				<a class="ui bottom right attached yellow label" id="BtnSynthesize">
-						Synthesize
-				</a>
 				<!-- end: status bar -->
 				<!-- start: table zone -->
 				<div class="ui fitted horizontal basic segments">
@@ -128,42 +105,40 @@
 				<!-- end: table zone -->
 				<div class="ui divider"></div>
 				<!-- start: natural language zone -->
-				<div class="ui left icon input" style="width: 100%">
-					<input id="DivTitle" type="text" placeholder="Title: a piece of short text of what you want." style="border: none;">
-					<i class="quote left icon"></i>
-				</div>
-				<div class="ui left icon input" style="width: 100%;">
-					<textarea id="DivQuestion" placeholder="Question: a description of what you want." oninput="auto_grow(this)" style="border: none; resize: none;"></textarea>
-					<i class="comment outline icon"></i>
+				<div class="ui fitted basic segment">
+					<div class="ui top left attached label">
+						<div class="ui checkbox" id="DivUseNL">
+							<input type="checkbox" checked="">
+							<label>Natural Language</label>
+						</div>
+					</div>
+					<div class="ui left icon input" style="width: 100%">
+						<input id="DivTitle" type="text" placeholder="Title: a piece of short text of what you want." style="border: none;">
+						<i class="quote left icon"></i>
+					</div>
+					<div class="ui left icon input" style="width: 100%;">
+						<textarea id="DivQuestion" placeholder="Question: a description of what you want." oninput="auto_grow(this)" style="border: none; resize: none;"></textarea>
+						<i class="comment outline icon"></i>
+					</div>
 				</div>
 				<!-- end: natural language zone -->
 				<div class="ui divider"></div>
 				<!-- start: solution zone -->
-				<div class="ui fitted horizontal basic segments">
-					<div class="ui left aligned segment" style="width:50%;">
-						<div class="ui top left attached label">Solution</div>
-<pre><code>out0 = gather(input0, [-99, -5])
-out1 = separate(out0, 2)
-out2 = spread(out1, 2, 4)
-out3 = mutate(out2, 3, /, 4)
-out4 = select(out3, [-1])
-output = out4</code></pre>
+				<div class="ui fitted basic segment">
+<!-- 					<div class="ui active inverted dimmer">
+						<div class="ui text loader">Synthesizing</div>
+					</div> -->
+					<div class="ui top left attached label">
+						Solution
 					</div>
-					<div class="ui left aligned segment" style="width:50%;">
-						<div class="ui top right attached label">Statistics</div>
-						<br/>
-						Concrete programs=: 25571<br/>
-						Partial programs=: 20057<br/>
-						Prune partial=:18506 %=:92.26703893902378<br/>
-						Prune concrete=:21029 %=:82.23769113448829<br/>
-						Total time: 32 seconds<br/>
-					</div>
+					<button class="ui orange button">Synthesize</button>
+					<br/><br/>
 				</div>
 				<!-- end: solution zone -->
 			</div>
 			<!-- end: problem card -->
 
-			<div class="ui mini black message" id="DivUsage">CPU: ... | Memory: ... | Synthesis Tasks Running: ...</div>
+			<div class="ui mini black message">Debug Message</div>
 			<br/>
 			<br/>
 			<br/>
@@ -190,14 +165,11 @@ output = out4</code></pre>
 		"obj_input1": null,
 		"obj_output": null,
 
-		"input0": [["","",""],["","",""],["","",""]],
-		"input1": null,
-		"output": [["","",""],["","",""],["","",""]],
-		"size": 3,
-		"enumerator": "ngram",
+		"size": null,
 		"spec": "morpheus",
-		"title": "",
-		"question": ""
+		"use_nl": null,
+		"title": null,
+		"question": null
 	};
 
 	// ================================= //
@@ -240,6 +212,16 @@ output = out4</code></pre>
 		});
 		current_configuration[arg_role] = ret_table;
 	}
+	// sync current_configuration by detecting all user interface elements
+	function SyncCurrentConf() {
+		// don't change the app
+		// obj_input0 and obj_output are tracked by the initialization and mutable already
+		current_configuration["size"] = parseInt( $("#DivSize").text() );
+		// leave spec the same
+		current_configuration["use_nl"] = $("#DivUseNL").checkbox("is checked");
+		current_configuration["title"] = $("#DivTitle").val();
+		current_configuration["question"] = $("#DivQuestion").val();
+	}
 	// ================================= //
 
 	// ========================= //
@@ -248,8 +230,9 @@ output = out4</code></pre>
 	// initialize dropdowns
 	$('.ui.dropdown').dropdown();
 	// initialize empty table
-	RenderDivTable($("#DivInput0")[0], current_configuration["input0"], "obj_input0");
-	RenderDivTable($("#DivOutput")[0], current_configuration["output"], "obj_output");
+	RenderDivTable($("#DivInput0")[0], [["","",""],["","",""],["","",""]], "obj_input0");
+	RenderDivTable($("#DivOutput")[0], [["","",""],["","",""],["","",""]], "obj_output");
+	SyncCurrentConf();
 	// ========================= //
 
 	// ================================== //
@@ -261,7 +244,7 @@ output = out4</code></pre>
 		// render preset benchmark tables
 		RenderDivTable($("#DivInput0")[0], benchmarks[selected_benchmark]["input0"], "obj_input0");
 		RenderDivTable($("#DivOutput")[0], benchmarks[selected_benchmark]["output"], "obj_output");
-		current_configuration["obj_input1"] = null; // (fixme)
+		current_configuration["obj_input1"] = null;
 		// set benchmark name
 		$("#DivBenchmarkName").html(selected_benchmark);
 		// set natural language zone
@@ -269,49 +252,32 @@ output = out4</code></pre>
 		$("#DivQuestion").val(benchmarks[selected_benchmark]["question"]);
 		auto_grow($("#DivQuestion")[0]);
 		// update global information
-		current_configuration["input0"] = benchmarks[selected_benchmark]["input0"];
-		current_configuration["input1"] = benchmarks[selected_benchmark]["input1"];
-		current_configuration["output"] = benchmarks[selected_benchmark]["output"];
-		current_configuration["title"] = benchmarks[selected_benchmark]["title"];
-		current_configuration["question"] = benchmarks[selected_benchmark]["question"];
-		current_configuration["size"] = benchmarks[selected_benchmark]["size"];
-		current_configuration["spec"] = benchmarks[selected_benchmark]["spec"];
-		current_configuration["enumerator"] = benchmarks[selected_benchmark]["enumerator"];
-		// (fixme) need to sync other ui texts
+		SyncCurrentConf();
 	});
 
-	// this stores the preset of all status texts
-	var Text_DivStatus = {
-		"Synthesizing": 'Status: Synthesizing <div class="ui mini active inline loader"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synthesize',
-		"Solved": 'Status: Solved <i class="check icon"></i>&nbsp;&nbsp;Synthesize',
-		"Failed": 'Status: Failed <i class="exclamation icon"></i>&nbsp;&nbsp;Synthesize'
-	};
 	// register click event for the "Synthesize" button
 	$("#BtnSynthesize").click(function(){
-		$("#DivStatus").html(Text_DivStatus["Synthesizing"]);
 		$.ajax({
 			url: current_configuration["app"],
 			type: "POST",
 			contentType: "application/json",
 			data: JSON.stringify({
 				"size": current_configuration["size"],
-				"enumerator": current_configuration["enumerator"],
 				"spec": current_configuration["spec"],
-				"input0": current_configuration["input0"],
-				"input1": current_configuration["input1"],
-				"output": current_configuration["output"],
+				"input0": current_configuration["obj_input0"].getData(),
+				"input1": (current_configuration["obj_input1"]==null)?null:current_configuration["obj_input1"].getData(),
+				"output": current_configuration["obj_output"].getData(),
 				"title": current_configuration["title"],
-				"question": current_configuration["question"]
+				"question": current_configuration["question"],
+				"use_nl": current_configuration["use_nl"]
 			}),
 			dataType: "json"
 		})
 		.done(function(data){
 			alert("received:"+JSON.stringify(data));
-			$("#DivStatus").html(Text_DivStatus["Solved"]);
 		})
 		.fail(function(){
 			alert("fail!");
-			$("#DivStatus").html(Text_DivStatus["Failed"]);
 		});
 	});
 

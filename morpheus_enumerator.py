@@ -344,7 +344,7 @@ def main():
     logger.info('Parsing succeeded')
 
     # Reading the n-gram model.
-    sketches = [line.strip() for line in open("./ngram.txt", 'r')]
+    sketches = [line.strip() for line in open("./tyrell/server/static/ngram-size3.txt", 'r')]
 
     logger.info('Building synthesizer...')
     synthesizer = Synthesizer(

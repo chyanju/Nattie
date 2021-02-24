@@ -372,6 +372,7 @@ def synthesize(arg_config=None):
             one_desc,
             arg_config["size"],
         )
+        print("### new sketches are: {}".format(sketches[:5]))
     else:
         # Reading the n-gram model.
         with open("./tyrell/server/static/demo-ngram-size{}.txt".format(arg_config["size"]), "r") as f:

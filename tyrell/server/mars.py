@@ -272,11 +272,11 @@ class DoubleSeq2Seq(nn.Module):
 with open("./tyrell/server/static/stop_model5_dataset.pkl","rb") as f:
     model4_dataset = pickle.load(f)
 
-with open("./tyrell/server/static/ngram-size3.txt","r") as f:
+with open("./tyrell/server/static/demo-ngram-size3.txt","r") as f:
     raw_ngram_3 = f.readlines()
-with open("./tyrell/server/static/ngram-size4.txt","r") as f:
+with open("./tyrell/server/static/demo-ngram-size4.txt","r") as f:
     raw_ngram_4 = f.readlines()
-with open("./tyrell/server/static/ngram-size5.txt","r") as f:
+with open("./tyrell/server/static/demo-ngram-size5.txt","r") as f:
     raw_ngram_5 = f.readlines()
 mor_ngram = {
     3:[],

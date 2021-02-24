@@ -290,7 +290,7 @@ mor_ngram = {
 for d_raw in raw_ngram_3:
     tmp1 = d_raw.replace("inner_join","join")
     tmp2 = tmp1.strip().split()
-    assert len(tmp2)==3
+    assert len(tmp2)==3, "tmp2 is: {}".format(tmp2)
     tmp3 = [model4_dataset["func_dict"][d_token] for d_token in tmp2]
     mor_ngram[3].append(tmp3)
 for d_raw in raw_ngram_4:

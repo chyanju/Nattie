@@ -378,9 +378,12 @@ def synthesize(arg_config=None):
             sketches = [p.strip() for p in f.readlines()]
 
     logger.info('Building synthesizer...')
+
+    enumerator = BidirectEnumerator(spec, depth=depth_val, loc=loc_val, sk_queue=sketches)
+    nsk_pre = len(enumerator.sk_queue) # only for BidirectEnumerator
     synthesizer = Synthesizer(
         #loc: # of function productions
-        enumerator=BidirectEnumerator(spec, depth=depth_val, loc=loc_val, sk_queue=sketches),
+        enumerator=enumerator,
         decider=ExampleConstraintPruningDecider(
             spec=spec,
             interpreter=MorpheusInterpreter(),
@@ -394,6 +397,7 @@ def synthesize(arg_config=None):
     logger.info('Synthesizing programs...')
 
     prog = synthesizer.synthesize()
+    nsk_post = len(enumerator.sk_queue)
     if prog is not None:
         logger.info('Solution found: {}'.format(prog))
     else:
@@ -403,5 +407,6 @@ def synthesize(arg_config=None):
         "status_code": 0,
         "status_message": "A solution is found.",
         "solution": "{}".format(prog),
+        "n_sketches": nsk_post - nsk_pre + 1,
     }
 

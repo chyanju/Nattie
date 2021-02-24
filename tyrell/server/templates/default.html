@@ -125,20 +125,21 @@
 				<div class="ui divider"></div>
 				<!-- start: solution zone -->
 				<div class="ui fitted basic segment">
-<!-- 					<div class="ui active inverted dimmer">
-						<div class="ui text loader">Synthesizing</div>
-					</div> -->
 					<div class="ui top left attached label">
 						Solution
 					</div>
-					<button class="ui orange button" id="BtnSynthesize">Synthesize</button>
+					<a class="ui top right attached big orange label" id="BtnSynthesize">
+						Synthesize
+					</a>
+					<br/><br/>
+					<div class="ui left aligned text">(root (summarise (group_by (filter (gather input0 [-1, -99]) l(a,b).(> a b) 3 0) [2]) mean 1))</div>
 					<br/><br/>
 				</div>
 				<!-- end: solution zone -->
 			</div>
 			<!-- end: problem card -->
 
-			<div class="ui mini black message">Debug Message</div>
+			<div class="ui mini black message" id="DivDebug">Debug Message</div>
 			<br/>
 			<br/>
 			<br/>
@@ -259,6 +260,7 @@
 	$("#BtnSynthesize").click(function(){
 		// first update the info from the user interface
 		SyncCurrentConf();
+		$("#DivDebug").text("Synthesizing...");
 		// then issue the request
 		$.ajax({
 			url: current_configuration["app"],
@@ -277,10 +279,10 @@
 			dataType: "json"
 		})
 		.done(function(data){
-			alert("received:"+JSON.stringify(data));
+			$("#DivDebug").text("received:"+JSON.stringify(data));
 		})
 		.fail(function(){
-			alert("fail!");
+			$("#DivDebug").text("failed!");
 		});
 	});
 

@@ -374,7 +374,7 @@ def synthesize(arg_config=None):
         )
     else:
         # Reading the n-gram model.
-        with open("./tyrell/server/static/ngram-size{}.txt".format(arg_config["size"]), "r") as f:
+        with open("./tyrell/server/static/demo-ngram-size{}.txt".format(arg_config["size"]), "r") as f:
             sketches = [p.strip() for p in f.readlines()]
 
     logger.info('Building synthesizer...')

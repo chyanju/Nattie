@@ -11,6 +11,11 @@
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.7/semantic.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.7/semantic.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+		<script>hljs.initHighlightingOnLoad();</script>
+
 		<script src="{{ url_for('static', filename='benchmarks.js') }}"></script>
 		<style type="text/css">
 			.main {
@@ -85,9 +90,7 @@
 							</div>
 						</div>
 						<div class="ui right aligned eight wide column">
-							<span>CPU: ...</span><span> | </span>
-							<span>Memory: ...</span><span> | </span>
-							<span>Status: Ready</span>
+							<span id="DivStatus">Status: Ready</span>
 						</div>
 					</div>
 				</div>
@@ -129,12 +132,14 @@
 					<div class="ui top left attached label">
 						Solution
 					</div>
-					<a class="ui top right attached big orange label" id="BtnSynthesize">
+					<a class="ui top right attached orange label" id="BtnSynthesize">
 						Synthesize
 					</a>
-					<br/><br/>
-					<div class="ui left aligned text">(root (summarise (group_by (filter (gather input0 [-1, -99]) l(a,b).(> a b) 3 0) [2]) mean 1))</div>
-					<br/><br/>
+					<br/>
+					<div class="ui container">
+						<pre><code class="r" id="DivSolution">To start solving, click "Synthesize".</code></pre>
+						<!-- <pre><code class="r" id="DivSolution">spread(unite(gather(@param0, ['3', '4']), 2, 3), 2, 3)</code></pre> -->
+					</div>
 				</div>
 				<!-- end: solution zone -->
 			</div>
@@ -262,6 +267,7 @@
 		// first update the info from the user interface
 		SyncCurrentConf();
 		$("#DivDebug").text("Synthesizing...");
+		$("#DivSize").text("Status: Synthesizing...");
 		// then issue the request
 		$.ajax({
 			url: current_configuration["app"],
@@ -281,9 +287,13 @@
 		})
 		.done(function(data){
 			$("#DivDebug").text("received:"+JSON.stringify(data));
+			$("#DivSize").text("Status: Successful");
+			$("#DivSolution").text(data["solution"]);
 		})
 		.fail(function(){
 			$("#DivDebug").text("failed!");
+			$("#DivSize").text("Status: Failed");
+			$("#DivSolution").text("To retry, click \"Synthesize\".");
 		});
 	});
 

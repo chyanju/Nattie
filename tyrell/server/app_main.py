@@ -2,6 +2,7 @@ import uuid
 import os
 import json
 import psutil
+import time
 
 from flask import Flask
 from flask import render_template
@@ -55,7 +56,10 @@ def render_default():
 @app.route('/synthesize', methods=["POST"])
 def process_synthesize():
 	request_config = request.get_json()
+	resp_start = time.time()
 	resp = app_synthesize.synthesize(request_config)
+	resp_end = time.time()
+	resp["time"] = resp_end - resp_start
 	return make_response(
 		jsonify(resp), 200
 	)

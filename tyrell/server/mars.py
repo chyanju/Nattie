@@ -462,6 +462,7 @@ def generate_one_ranking(arg_one_description, arg_one_size):
     for i in range(len(bmrk_descriptions)):
         for j in range(len(sorted_expanded_pairs[i])):
             curr_ngram = [benchmark_dataset["func_list"][p] for p in sorted_expanded_pairs[i][j][1]]
+            new_ngram_list.append(" ".join(curr_ngram).replace("join","inner_join"))
 
     return new_ngram_list
 
